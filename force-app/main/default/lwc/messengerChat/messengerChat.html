@@ -48,6 +48,17 @@
                         </div>
                     </template>
                 </div>
+                <!-- 👇 Insert this block right here 👇 -->
+                    <div class="prompt-suggestions">
+                        <p>Try asking:</p>
+                        <div class="prompt-buttons">
+                            <button onclick={handlePromptClick} data-prompt="How do I create a new contact in Salesforce?">How do I create a new contact?</button>
+                            <button onclick={handlePromptClick} data-prompt="Show me order status">order status</button>
+                            <button onclick={handlePromptClick} data-prompt="Explain the difference between SOQL and SOSL.">SOQL vs SOSL</button>
+                            <button onclick={handlePromptClick} data-prompt="How do I use Lightning Web Components in a record page?">LWC in record page</button>
+                        </div>
+                    </div>
+                    <!-- ☝️ End insert block ☝️ -->
             </div>
             
             <!-- Search Mode Welcome Message -->
@@ -58,6 +69,13 @@
                     </div>
                     <div class="search-mode-welcome">
                         {searchModeWelcomeText}
+                    </div>
+                    
+                    <div class="search-mode-actions">
+                        <button class="action-button" onclick={handleSearchModeContinue}>
+                            <lightning-icon icon-name="utility:chevronright" size="x-small"></lightning-icon>
+                            Continue
+                        </button>
                     </div>
                 </div>
             </template>

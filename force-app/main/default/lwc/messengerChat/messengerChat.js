@@ -1983,6 +1983,7 @@ export default class MessengerChat extends LightningElement {
     // Add this getter method to display the welcome message in search mode
     get showSearchModeWelcome() {
         return this.isSearchMode && this.isFirstUserMessage;
+        //return true;
     }
 
     // Add this getter method to provide the placeholder text for the search input
@@ -2080,5 +2081,13 @@ export default class MessengerChat extends LightningElement {
             this.shouldScrollToBottom = false;
         }
     }
+    handlePromptClick(event) {
+    const promptText = event.target.dataset.prompt;
+    const inputBox = this.template.querySelector(".message-textarea");
+    if (inputBox) {
+        inputBox.value = promptText;
+    }
+}
+
 
 }

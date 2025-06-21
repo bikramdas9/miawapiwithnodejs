@@ -1,0 +1,36 @@
+<template>
+    <div class="messenger-chat-container">
+        <!-- Chat Bubble -->
+        <div if:true={showChatBubble} class="chat-bubble" onclick={expandChatWindow}>
+            <lightning-icon icon-name="utility:agent_astro" alternative-text="Chat" size="small"></lightning-icon>
+        </div>
+
+        <!-- Expanded Chat Window -->
+        <template if:true={showChatWindow}>
+            <div class="chat-window">
+                <div class="chat-header">
+                    <div class="chat-title">Need help?</div>
+                    <div class="header-actions">
+                        <button class="action-button" onclick={launchChat}>
+                            <lightning-icon icon-name="utility:chat" size="x-small"></lightning-icon>
+                        </button>
+                        <button class="action-button" onclick={collapseChatWindow}>
+                            <lightning-icon icon-name="utility:close" size="x-small"></lightning-icon>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Prompt suggestions -->
+                <div class="prompt-suggestions">
+                    <p>Try asking:</p>
+                    <div class="prompt-buttons">
+                        <button onclick={handlePromptClick} data-prompt="How do I create a new contact?">Create Contact</button>
+                        <button onclick={handlePromptClick} data-prompt="What's my order status?">Order Status</button>
+                        <button onclick={handlePromptClick} data-prompt="Difference between SOQL and SOSL?">SOQL vs SOSL</button>
+                        <button onclick={handlePromptClick} data-prompt="How to use LWC in record page?">LWC in Record Page</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

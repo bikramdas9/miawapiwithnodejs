@@ -1,0 +1,123 @@
+<template>
+    <div class="chat-widget-container">
+        
+        <!-- Minimized Bubble Button -->
+        <template if:true={isMinimized}>
+            <div class="chat-minimized-button" onclick={toggleChat}>
+                <lightning-icon icon-name="utility:chat" size="medium" variant="inverse"></lightning-icon>
+                <span class="chat-button-text">Chat</span>
+                <template if:true={isConnected}>
+                    <div class="chat-status-indicator connected"></div>
+                </template>
+                <template if:true={isConnecting}>
+                    <div class="chat-status-indicator connecting"></div>
+                </template>
+            </div>
+        </template>
+
+        <!-- Expanded Chat Window -->
+        <template if:false={isMinimized}>
+            <div class="chat-window expanded">
+                <!-- Header -->
+                <div class="chat-header">
+                    <div class="chat-header-content">
+                        <lightning-icon icon-name="utility:chat" size="small" variant="inverse"></lightning-icon>
+                        <span class="chat-title">{chatHeaderTitle}</span>
+                        <template if:true={isConnecting}>
+                            <lightning-spinner alternative-text="Connecting..." size="x-small"></lightning-spinner>
+                        </template>
+                    </div>
+                    <div class="chat-header-actions">
+                        <lightning-button-icon 
+                            icon-name="utility:minimize_window" 
+                            variant="bare-inverse" 
+                            onclick={toggleChat}
+                            title="Minimize">
+                        </lightning-button-icon>
+                    </div>
+                </div>
+
+                <!-- Body -->
+                <div class="chat-body">
+                    <div class="messages-container">
+                        <template if:true={hasMessages}>
+                            <template for:each={messages} for:item="message">
+                                <div key={message.id} class={message.cssClass}>
+                                    <div class="message-bubble">
+                                        <div class="message-text">{message.text}</div>
+                                        <div class="message-time">{message.timestamp}</div>
+                                    </div>
+                                </div>
+                            </template>
+                        </template>
+                        <template if:false={hasMessages}>
+                            <div class="empty-state">
+                                <lightning-icon icon-name="utility:chat" size="large" variant="brand"></lightning-icon>
+                                <p>No messages yet.</p>
+                            </div>
+                        </template>
+                        <template if:true={showTypingIndicator}>
+                            <div class="message-row agent">
+                                <div class="message-bubble typing-indicator">
+                                    <div class="typing-dots">
+                                        <span></span><span></span><span></span>
+                                    </div>
+                                    <div class="message-text">Agent is typing...</div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="chat-footer">
+                    <template if:true={isDisconnected}>
+                        <lightning-button 
+                            variant="brand" 
+                            label="Start Conversation" 
+                            onclick={startConversation}
+                            disabled={isLoading}>
+                        </lightning-button>
+                    </template>
+
+                    <template if:true={isConnected}>
+                        <div class="message-input-container">
+                            <lightning-textarea 
+                                value={currentMessage}
+                                placeholder="Type your message..."
+                                onchange={handleMessageInput}
+                                onkeypress={handleKeyPress}
+                                max-length="1000"
+                                class="message-input">
+                            </lightning-textarea>
+                            <lightning-button-icon 
+                                icon-name="utility:send" 
+                                variant="brand" 
+                                onclick={sendUserMessage}
+                                disabled={sendButtonDisabled}
+                                title="Send">
+                            </lightning-button-icon>
+                            <lightning-button 
+                                variant="destructive-text" 
+                                label="End Conversation" 
+                                onclick={endChat}
+                                disabled={isLoading}>
+                            </lightning-button>
+                        </div>
+                    </template>
+
+                    <template if:true={isEnded}>
+                        <p>Conversation ended.</p>
+                        <lightning-button 
+                            variant="brand" 
+                            label="Start New" 
+                            onclick={startConversation}
+                            disabled={isLoading}>
+                        </lightning-button>
+                    </template>
+                </div>
+            </div>
+        </template>
+
+    </div>
+</template>

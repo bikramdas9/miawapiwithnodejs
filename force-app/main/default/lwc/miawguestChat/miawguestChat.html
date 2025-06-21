@@ -1,0 +1,49 @@
+<template>
+    <div class="chat-container">
+        <!-- Header -->
+        <div class="chat-header">
+            <span>Agentforce</span>
+            <button onclick={endChat} title="End Chat">✕</button>
+        </div>
+
+        <!-- Messages -->
+        <div class="chat-body" id="chatScroll">
+            <template for:each={messages} for:item="msg">
+                <div key={msg.id} class={msg.cssClass}>
+                    <template if:true={msg.isHtml}>
+                        <div lwc:dom="manual" class="html-msg" data-id={msg.id}></div>
+                    </template>
+            <template if:false={msg.isHtml}>
+                {msg.text}
+            </template>
+                </div>
+            </template>
+            <div if:true={isThinking} class="thinking">Agentforce is typing...</div>
+        </div>
+
+        <!-- Footer -->
+        <div class="chat-footer">
+            <!-- Suggested Prompts (Above input) -->
+            <template if:true={showPrompts}>
+                <div class="suggestions">
+                    <template for:each={suggestedPrompts} for:item="prompt">
+                        <button key={prompt} onclick={handlePromptClick}>{prompt}</button>
+                    </template>
+                </div>
+            </template>
+
+            <!-- Input + Send -->
+            <div class="chat-footer">
+                <input type="text" value={inputText} oninput={handleInput} onkeypress={checkEnter} placeholder="Type your message..." />
+                <button onclick={sendMessage}>Send</button>
+            </div>
+
+            <!-- Toggle link -->
+            <div class="prompt-toggle">
+                <a href="javascript:void(0);" onclick={togglePrompts}>
+                    {promptToggleText}
+                </a>
+            </div>
+        </div>
+    </div>
+</template>

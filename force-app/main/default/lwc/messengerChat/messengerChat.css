@@ -1660,3 +1660,30 @@
     align-items: center;
     justify-content: center;
 }
+.prompt-suggestions {
+    margin-top: 1rem;
+    text-align: left;
+    color: #000; /* Make text black */
+}
+
+.prompt-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.prompt-buttons button {
+    background-color: #0b0b0b;
+    border: 1px solid #090909;
+    padding: 6px 10px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    color: #faf8f8; /* Make button text black */
+    transition: background-color 0.2s ease;
+}
+
+.prompt-buttons button:hover {
+    background-color: #0c0c0c;
+}
